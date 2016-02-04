@@ -1,0 +1,77 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/two_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="br.ufc.mdcc.nicempos.ResultActivity" >
+
+    
+    <LinearLayout
+        android:id="@+id/location_layout_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="top"
+        android:layout_alignParentTop="true"
+        android:gravity="center" >
+        
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/localization" />
+	    
+	    <TextView
+	        android:id="@+id/place_name_tv_result"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/localization"
+	        android:textSize="18sp" />
+    
+    </LinearLayout>
+
+	<LinearLayout
+        android:id="@+id/result_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:gravity="center" >
+        
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/result_rating" />
+	    
+	    <TextView
+	        android:id="@+id/rating_tv"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/rating_very_nice"
+	        android:textSize="20sp" />
+    
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/suggestion_layout_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:layout_marginTop="45dp" >
+        
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:hint="@string/suggestion_name"
+	        android:textSize="15sp" />
+	    
+    </LinearLayout>
+
+</RelativeLayout>

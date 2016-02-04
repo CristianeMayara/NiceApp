@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="background_color">#d3d3d3</color>
+    <color name="little_nice_color">#916f7c</color>
+	<color name="acceptable_color">#c8b7be</color>
+    <color name="nice_color">#e9afc6</color>
+    <color name="very_nice_color">#ff80b2</color>
+    <color name="very_pleasant_color">#ff2a7f</color>
+    
+
+</resources>

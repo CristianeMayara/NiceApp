@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Nice</string>
+    
+    <string name="action_settings">Settings</string>
+    <string name="instruction">Adicione uma nota de agradabilidade para esse lugar:</string>
+    <string name="localization">Você está em</string>
+    <string name="unavailable_place">Local não indentificado</string>
+    <string name="suggestion_name">Sugira um novo nome a este lugar</string>
+    
+    <string name="result_rating">Este lugar é considerado</string>
+    
+    <string name="rating_little_nice">POUCO AGRADÁVEL</string>
+    <string name="rating_acceptable">ACEITÁVEL</string>
+    <string name="rating_nice">AGRADÁVEL</string>
+    <string name="rating_very_nice">MUITO AGRADÁVEL</string>
+    <string name="rating_very_pleasant">AGRADABILÍSSIMO</string>
+
+</resources>

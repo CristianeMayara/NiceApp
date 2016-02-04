@@ -1,0 +1,111 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/one_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="br.ufc.mdcc.nicempos.MainActivity" >
+
+    
+    <LinearLayout
+        android:id="@+id/location_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_alignParentTop="true"
+        android:gravity="center" >
+        
+	    <TextView
+	        android:id="@+id/local_indication_tv"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/localization" />
+	    
+	    <TextView
+	        android:id="@+id/place_name_tv"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/unavailable_place"
+	        android:textSize="18sp" />
+    
+    </LinearLayout>
+    
+    <ImageView
+        android:id="@+id/place_image_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/place_nophoto" />
+
+	<TextView
+        android:id="@+id/instruction_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/place_image_iv"
+        android:layout_marginTop="-40dp"
+        android:hint="@string/instruction"
+        android:textSize="15sp" />
+
+    <LinearLayout
+        android:id="@+id/buttons_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/instruction_tv"
+        android:layout_gravity="center"
+        android:gravity="center" >
+
+        <Button
+            android:id="@+id/button_sum"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:text="1" />
+
+        <Button
+            android:id="@+id/button_sub"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:text="2" />
+
+        <Button
+            android:id="@+id/button_mul"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:text="3" />
+
+        <Button
+            android:id="@+id/button_div"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:text="4" />
+        
+        <Button
+            android:id="@+id/button_answer5"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:text="5" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/suggestion_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttons_layout"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_marginTop="45dp"
+        android:gravity="center" >
+        
+	    <TextView
+	        android:id="@+id/suggestion_name_tv"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:hint="@string/suggestion_name"
+	        android:textSize="5sp" />
+	    
+    </LinearLayout>
+
+</RelativeLayout>
