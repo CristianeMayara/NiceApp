@@ -1,4 +1,4 @@
-package br.ufc.mdcc.nicempos;
+package br.ufc.mdcc.nicempos.view;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;

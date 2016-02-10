@@ -1,4 +1,4 @@
-package br.ufc.mdcc.nicempos;
+package br.ufc.mdcc.nicempos.view;
 
 import java.util.ArrayList;
 
@@ -32,6 +32,12 @@ import br.ufc.mdcc.hellompos.R;
 import br.ufc.mdcc.mpos.MposFramework;
 import br.ufc.mdcc.mpos.config.Inject;
 import br.ufc.mdcc.mpos.config.MposConfig;
+import br.ufc.mdcc.nicempos.business.CalculadoraImpl;
+import br.ufc.mdcc.nicempos.business.ICalculadora;
+import br.ufc.mdcc.nicempos.model.dao.VoteDAO;
+import br.ufc.mdcc.nicempos.model.vo.Input;
+import br.ufc.mdcc.nicempos.model.vo.Place;
+import br.ufc.mdcc.nicempos.model.vo.Vote;
 
 @SuppressLint("NewApi")
 //@MposConfig(endpointSecondary = "10.99.206.104")
@@ -69,6 +75,8 @@ public class MainActivity extends Activity {
 	// DB
     int idImage;
 	ArrayList<Place> knownPlacesList;
+	private VoteDAO voteDao;
+	Vote currentVote; // from server
 	
 	// Functionality
 	int currentPlaceId;  // placeId starts in 0
@@ -83,6 +91,8 @@ public class MainActivity extends Activity {
 			getFragmentManager().beginTransaction().add(R.id.container, new MainFragment()).commit();
 		}
 		MposFramework.getInstance().start(this);
+		
+		voteDao = (new VoteDAO(this));
 		
 		// Initialize list of places
 		knownPlacesList = new ArrayList<Place>();
@@ -248,9 +258,13 @@ public class MainActivity extends Activity {
 			View root = getView();
 			//EditText number01 = (EditText) root.findViewById(R.id.number1_et);
 			//EditText number02 = (EditText) root.findViewById(R.id.number2_et);
-
+			
+			// votes of the current place
+			currentVote = voteDao.search(currentPlaceId);
+			
 			Command command = new Command();
-			command.input = new Input(currentPlaceId,currentVoteId); // dados obtidos da entrada do usuario
+			//command.input = new Input(currentPlaceId,currentVoteId); // dados obtidos da entrada do usuario
+			command.input = new Input(currentVote, currentVoteId);
 			command.function = function;
 
 			new CalculatorTask(root).execute(command);
@@ -263,21 +277,6 @@ public class MainActivity extends Activity {
 		private String function;
 	}
 	
-	// helper object to store locations
-	private final class Place {
-		private String name;
-		private double latitude;
-		private double longitude;
-		private int imageId;
-		
-		public Place (String name, double lat, double lon, int id){
-			this.name = name;
-			this.latitude = lat;
-			this.longitude = lon;
-			this.imageId = id;
-		}
-	}
-
 	// your process is recommend executed in parallel the thread UI, to avoid
 	// exceptions
 	final class CalculatorTask extends AsyncTask<Command, Void, Object> {
@@ -294,19 +293,19 @@ public class MainActivity extends Activity {
 
 			switch (command.function) {
 			case "1":
-				return calc.chosenAnswerOne(command.input);
+				return calc.calculatesClassificationPlace(command.input);
 
 			case "2":
-				return calc.chosenAnswerTwo(command.input);
+				return calc.calculatesClassificationPlace(command.input);
 
 			case "3":
-				return calc.chosenAnswerThree(command.input);
+				return calc.calculatesClassificationPlace(command.input);
 
 			case "4":
-				return calc.chosenAnswerFour(command.input);
+				return calc.calculatesClassificationPlace(command.input);
 			
 			case "5":
-				return calc.chosenAnswerFive(command.input);
+				return calc.calculatesClassificationPlace(command.input);
 			}
 
 			return null;
@@ -316,11 +315,33 @@ public class MainActivity extends Activity {
 		protected void onPostExecute(Object result) {
 		    TextView nameTv = (TextView)findViewById(R.id.place_name_tv);
 		    
+		    // update place votes in the local database
+		    switch((int)result){
+				case 1:
+					currentVote.setNVotesRating1(currentVote.getNVotesRating1()+1);
+					break;
+				case 2:
+					currentVote.setNVotesRating2(currentVote.getNVotesRating2()+1);
+					break;
+				case 3:
+					currentVote.setNVotesRating3(currentVote.getNVotesRating3()+1);
+					break;
+				case 4:
+					currentVote.setNVotesRating4(currentVote.getNVotesRating4()+1);
+					break;
+				case 5:
+					currentVote.setNVotesRating5(currentVote.getNVotesRating5()+1);
+					break;
+			}
+		    currentVote.setNVotesPlace(currentVote.getNVotesPlace()+1);
+		    voteDao.update(currentVote);
+		    voteDao.list();
+		    
 		    Bundle bundle = new Bundle();
 		    
 		    bundle.putString("placeNameKey", nameTv.getText().toString());
             bundle.putInt("ratingIdKey", (int)result);
-            bundle.putInt("nVotesPlaceKey", 10);
+            bundle.putInt("nVotesPlaceKey", currentVote.getNVotesPlace());
             
             Intent resultActivity = new Intent(getApplicationContext(), ResultActivity.class);
             resultActivity.putExtras(bundle);
@@ -399,8 +420,8 @@ public class MainActivity extends Activity {
 	
 	public boolean isNearThePlace (Location currentLocation, int placeId) {
 		Location l = new Location(provider);
-		l.setLatitude(knownPlacesList.get(placeId).latitude);
-		l.setLongitude(knownPlacesList.get(placeId).longitude);
+		l.setLatitude(knownPlacesList.get(placeId).getLat());
+		l.setLongitude(knownPlacesList.get(placeId).getLon());
 		
 		Log.i("distance", "" + l.distanceTo(currentLocation) + "metros");
 		if (l.distanceTo(currentLocation) <= DISTANCE_RADIUS_IDENTIFY_PLACE)
@@ -442,7 +463,7 @@ public class MainActivity extends Activity {
 		if (placeId == -1)
 			nameTv.setText(R.string.unavailable_place);
 		else
-			nameTv.setText(knownPlacesList.get(placeId).name);
+			nameTv.setText(knownPlacesList.get(placeId).getName());
 		imageIv.setImageDrawable(drawable);
 	}
 	
