@@ -31,6 +31,11 @@ public class ResultFragment extends Fragment {
 		TextView nameTv = (TextView)rootView.findViewById(R.id.place_name_tv_result);
 		if (nameTv != null) nameTv.setText(placeName);
 		
+		// Set place number of votes
+		TextView nVotesTv = (TextView)rootView.findViewById(R.id.number_votes_tv);
+		nVotesTv.setText(getResources().getString(R.string.number_votes_init) +" "+ nVotesPlace +" "+ 
+				getResources().getString(R.string.number_votes_final));
+		
 		Typeface tf = Typeface.createFromAsset(getResources().getAssets(),"fonts/STENCIL.TTF"); 
 		TextView ratingTv = (TextView)rootView.findViewById(R.id.rating_tv);
 		if (ratingTv != null) ratingTv.setTypeface(tf);

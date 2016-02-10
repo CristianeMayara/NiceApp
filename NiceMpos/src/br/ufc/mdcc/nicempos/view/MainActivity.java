@@ -83,6 +83,7 @@ public class MainActivity extends Activity {
 	int currentVoteId;   // from user
 	int currentRatingId; // from server
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -91,6 +92,9 @@ public class MainActivity extends Activity {
 			getFragmentManager().beginTransaction().add(R.id.container, new MainFragment()).commit();
 		}
 		MposFramework.getInstance().start(this);
+		
+		TextView instructionTv = (TextView)findViewById(R.id.instruction_tv);
+		if (instructionTv != null) instructionTv.setTextColor(getResources().getColor(R.color.black));
 		
 		voteDao = (new VoteDAO(this));
 		
@@ -128,9 +132,11 @@ public class MainActivity extends Activity {
 			@Override
 			public void onLocationChanged(Location location) {
 				Log.v("location-method", "onLocationChanged");
-				TextView tv = (TextView)findViewById(R.id.suggestion_name_tv);
+				TextView tv = (TextView)findViewById(R.id.location_tv);
 				if (location != null)
-					tv.setText(""+(double) location.getLatitude()+" "+(double) location.getLongitude());
+					tv.setText(getResources().getString(R.string.location_str) +" "+ 
+							(double) location.getLatitude() +" "+ 
+							(double) location.getLongitude());
 				else
 					tv.setText("location is null");
 				
@@ -167,7 +173,7 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
-	@Override
+	/*@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
@@ -177,7 +183,7 @@ public class MainActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
+	}*/
 	
 	@Override
 	protected void onResume() {
@@ -208,7 +214,7 @@ public class MainActivity extends Activity {
 		}
 
 		private void initButtons(View root) {
-			Button answer1Button = (Button) root.findViewById(R.id.button_sum);
+			Button answer1Button = (Button) root.findViewById(R.id.option_one_btn);
 			answer1Button.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -217,7 +223,7 @@ public class MainActivity extends Activity {
 				}
 			});
 
-			Button answer2Button = (Button) root.findViewById(R.id.button_sub);
+			Button answer2Button = (Button) root.findViewById(R.id.option_two_btn);
 			answer2Button.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -226,7 +232,7 @@ public class MainActivity extends Activity {
 				}
 			});
 
-			Button answer3Button = (Button) root.findViewById(R.id.button_mul);
+			Button answer3Button = (Button) root.findViewById(R.id.option_three_btn);
 			answer3Button.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -235,7 +241,7 @@ public class MainActivity extends Activity {
 				}
 			});
 
-			Button answer4Button = (Button) root.findViewById(R.id.button_div);
+			Button answer4Button = (Button) root.findViewById(R.id.option_four_btn);
 			answer4Button.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -244,7 +250,7 @@ public class MainActivity extends Activity {
 				}
 			});
 			
-			Button answer5Button = (Button) root.findViewById(R.id.button_answer5);
+			Button answer5Button = (Button) root.findViewById(R.id.option_five_btn);
 			answer5Button.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {

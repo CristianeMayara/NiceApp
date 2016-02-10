@@ -23,12 +23,14 @@
 	        android:id="@+id/local_indication_tv"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
+	        android:textColor="@color/black"
 	        android:text="@string/localization" />
 	    
 	    <TextView
 	        android:id="@+id/place_name_tv"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
+	        android:textColor="@color/black"
 	        android:text="@string/unavailable_place"
 	        android:textSize="18sp" />
     
@@ -36,76 +38,73 @@
     
     <ImageView
         android:id="@+id/place_image_iv"
+        android:contentDescription="@string/image_place_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/location_layout"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="-20dp"
         android:src="@drawable/place_nophoto" />
-
+		
 	<TextView
         android:id="@+id/instruction_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/place_image_iv"
-        android:layout_marginTop="-40dp"
-        android:hint="@string/instruction"
-        android:textSize="15sp" />
+        android:layout_marginTop="-55dp"
+        android:layout_gravity="center"
+        android:textColorHighlight="@color/black"
+        android:hint="@string/instruction" />
 
     <LinearLayout
         android:id="@+id/buttons_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/instruction_tv"
+        android:layout_marginTop="12dp"
         android:layout_gravity="center"
         android:gravity="center" >
 
         <Button
-            android:id="@+id/button_sum"
+            android:id="@+id/option_one_btn"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:text="1" />
+            android:text="@string/option_one_button" />
 
         <Button
-            android:id="@+id/button_sub"
+            android:id="@+id/option_two_btn"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:text="2" />
+            android:text="@string/option_two_button" />
 
         <Button
-            android:id="@+id/button_mul"
+            android:id="@+id/option_three_btn"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:text="3" />
+            android:text="@string/option_three_button" />
 
         <Button
-            android:id="@+id/button_div"
+            android:id="@+id/option_four_btn"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:text="4" />
+            android:text="@string/option_four_button" />
         
         <Button
-            android:id="@+id/button_answer5"
+            android:id="@+id/option_five_btn"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:text="5" />
+            android:text="@string/option_five_button" />
 
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/suggestion_layout"
+        
+    <TextView
+        android:id="@+id/location_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/buttons_layout"
-        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="center"
-        android:layout_marginTop="45dp"
-        android:gravity="center" >
-        
-	    <TextView
-	        android:id="@+id/suggestion_name_tv"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:hint="@string/suggestion_name"
-	        android:textSize="5sp" />
-	    
-    </LinearLayout>
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:hint="@string/suggestion_name" />
 
 </RelativeLayout>

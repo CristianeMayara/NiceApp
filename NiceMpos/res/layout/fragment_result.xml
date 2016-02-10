@@ -22,12 +22,14 @@
 	    <TextView
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
+	        android:textColor="@color/white"
 	        android:text="@string/localization" />
 	    
 	    <TextView
 	        android:id="@+id/place_name_tv_result"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
+	        android:textColor="@color/white"
 	        android:text="@string/localization"
 	        android:textSize="18sp" />
     
@@ -45,33 +47,28 @@
 	    <TextView
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
+	        android:textColor="@color/white"
 	        android:text="@string/result_rating" />
 	    
 	    <TextView
 	        android:id="@+id/rating_tv"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
+	        android:textColor="@color/white"
 	        android:text="@string/rating_very_nice"
-	        android:textSize="20sp" />
+	        android:textSize="24sp" />
     
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/suggestion_layout_result"
+            
+    <TextView
+        android:id="@+id/number_votes_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_gravity="bottom"
         android:layout_alignParentBottom="true"
         android:gravity="center"
-        android:layout_marginTop="45dp" >
-        
-	    <TextView
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:hint="@string/suggestion_name"
-	        android:textSize="15sp" />
-	    
-    </LinearLayout>
+        android:layout_marginTop="45dp"
+        android:textColor="@color/white"
+        android:hint="@string/suggestion_name" />
 
 </RelativeLayout>

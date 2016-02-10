@@ -12,7 +12,7 @@ public class ResultActivity extends Activity {
 	
 	String placeName;
 	int ratingId;
-	int nVotosPlace;
+	int nVotesPlace;
 	
 	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
@@ -26,11 +26,11 @@ public class ResultActivity extends Activity {
 		Bundle bundle = intent.getExtras();
 		placeName = bundle.getString("placeNameKey");
 		ratingId = bundle.getInt("ratingIdKey");
-		nVotosPlace = bundle.getInt("nVotesPlaceKey");
-		Log.i("dados recebidos", placeName +" "+ ratingId +" "+ nVotosPlace);
+		nVotesPlace = bundle.getInt("nVotesPlaceKey");
+		Log.i("dados recebidos", placeName +" "+ ratingId +" "+ nVotesPlace);
 		
 		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction().add(R.id.containerResult, new ResultFragment(placeName, ratingId, nVotosPlace)).commit();
+			getFragmentManager().beginTransaction().add(R.id.containerResult, new ResultFragment(placeName, ratingId, nVotesPlace)).commit();
 		}
 		
 		// Set color to activity background according to results 
