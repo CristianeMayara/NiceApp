@@ -20,7 +20,6 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -68,9 +67,9 @@ public class MainActivity extends Activity {
     // Declaring a Location Manager
     protected LocationManager locationManager;
  
-    Location location; // delete
-    double latitude;
-    double longitude;
+    Location location; // It is not yet used
+    double latitude; // It is not yet used
+    double longitude; // It is not yet used
 	
 	// DB
     int idImage;
@@ -81,7 +80,7 @@ public class MainActivity extends Activity {
 	// Functionality
 	int currentPlaceId;  // placeId starts in 0
 	int currentVoteId;   // from user
-	int currentRatingId; // from server
+	//int currentRatingId; // from server - result
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -97,6 +96,11 @@ public class MainActivity extends Activity {
 		if (instructionTv != null) instructionTv.setTextColor(getResources().getColor(R.color.black));
 		
 		voteDao = (new VoteDAO(this));
+		
+		// Initialize current variables
+		currentPlaceId = -1;
+		currentVoteId = -1;
+		currentVote = null;
 		
 		// Initialize list of places
 		knownPlacesList = new ArrayList<Place>();
@@ -114,24 +118,20 @@ public class MainActivity extends Activity {
 	    		MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, new LocationListener() {
 			@Override
 			public void onStatusChanged(String provider, int status, Bundle extras) {
-				Log.v("location-method", "onStatusChanged");
 			}
 			
 			@Override
 			public void onProviderEnabled(String provider) {
-				Log.v("location-method", "onProviderEnabled");
 				Toast.makeText(getApplicationContext(), "Enabled new provider " + provider, Toast.LENGTH_SHORT).show();
 			}
 			
 			@Override
 			public void onProviderDisabled(String provider) {
-				Log.v("location-method", "onProviderDisabled");
 				Toast.makeText(getApplicationContext(), "Disabled provider " + provider, Toast.LENGTH_SHORT).show();
 			}
 			
 			@Override
 			public void onLocationChanged(Location location) {
-				Log.v("location-method", "onLocationChanged");
 				TextView tv = (TextView)findViewById(R.id.location_tv);
 				if (location != null)
 					tv.setText(getResources().getString(R.string.location_str) +" "+ 
@@ -140,12 +140,12 @@ public class MainActivity extends Activity {
 				else
 					tv.setText("location is null");
 				
-				// atualizar latitude e longitude
+				// Update variables of localization
 				if (location != null){
 					latitude = location.getLatitude();
 					longitude = location.getLongitude();
 					
-					// verificar se eh de um canto conhecido
+					// Check if the user is in a known location
 					int placeId = isKnownPlace (location);
 					showPlaceInformations(placeId);
 					if (isKnownPlace) isKnownPlace = false;
@@ -188,7 +188,6 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.v("location-method", "Entrou onResume");
 		// Request updates at startup
 		//locationManager.requestLocationUpdates(provider, 400, 1, this);
 	}
@@ -196,7 +195,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		Log.v("location-method", "Entrou onPause");
+		currentVoteId = -1; 
 		// Remove the locationlistener updates when Activity is paused
 		//locationManager.removeUpdates(this);
 	}
@@ -262,14 +261,12 @@ public class MainActivity extends Activity {
 
 		private void executeCommand(String function) {
 			View root = getView();
-			//EditText number01 = (EditText) root.findViewById(R.id.number1_et);
-			//EditText number02 = (EditText) root.findViewById(R.id.number2_et);
 			
-			// votes of the current place
+			// Votes of the current place
 			currentVote = voteDao.search(currentPlaceId);
+			currentVote.list();
 			
 			Command command = new Command();
-			//command.input = new Input(currentPlaceId,currentVoteId); // dados obtidos da entrada do usuario
 			command.input = new Input(currentVote, currentVoteId);
 			command.function = function;
 
@@ -321,8 +318,11 @@ public class MainActivity extends Activity {
 		protected void onPostExecute(Object result) {
 		    TextView nameTv = (TextView)findViewById(R.id.place_name_tv);
 		    
-		    // update place votes in the local database
-		    switch((int)result){
+		    Log.v("debug", "Atualizando os votos..");
+		    Log.v("debug", "result: " + (int)result);
+		    
+		    // Update place votes in the local database
+		    switch(currentVoteId){
 				case 1:
 					currentVote.setNVotesRating1(currentVote.getNVotesRating1()+1);
 					break;
@@ -340,6 +340,7 @@ public class MainActivity extends Activity {
 					break;
 			}
 		    currentVote.setNVotesPlace(currentVote.getNVotesPlace()+1);
+		    
 		    voteDao.update(currentVote);
 		    voteDao.list();
 		    

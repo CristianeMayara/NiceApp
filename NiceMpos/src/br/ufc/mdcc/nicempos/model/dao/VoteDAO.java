@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import br.ufc.mdcc.nicempos.model.vo.Vote;
 
+// Related to accounting of the votes from a particular location
 public class VoteDAO {
 	
 	private SQLiteDatabase db;
@@ -80,7 +81,7 @@ public class VoteDAO {
 		c.close();
 		close();
 		
-		Log.i(BaseDAO.DB_LOG, "" + idFound);
+		Log.i(BaseDAO.DB_LOG, "idFound: " + idFound);
 		return vote;
 	}
 	

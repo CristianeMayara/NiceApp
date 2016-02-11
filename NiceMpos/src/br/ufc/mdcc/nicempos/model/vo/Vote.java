@@ -2,6 +2,8 @@ package br.ufc.mdcc.nicempos.model.vo;
 
 import java.io.Serializable;
 
+import android.util.Log;
+
 public class Vote implements Serializable {
 
 	protected int placeId;
@@ -65,5 +67,15 @@ public class Vote implements Serializable {
 	}
 	public int getNVotesPlace(){
 		return this.nVotesPlace;
+	}
+	
+	public void list(){
+		Log.v("Vote List", "PlaceId: "+this.placeId+"|"
+							 +this.nVotesRating1+"|"
+							 +this.nVotesRating2+"|"
+							 +this.nVotesRating3+"|"
+							 +this.nVotesRating4+"|"
+							 +this.nVotesRating5+"|"
+							 +this.nVotesPlace);
 	}
 }

@@ -8,8 +8,8 @@ public final class Input implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Vote vote;
-	private int currentVoteId;
+	private Vote vote; // object with the votes of the current user location 
+	private int currentVoteId; // vote user represented by a id number
 
 	public Input() {
 	}
