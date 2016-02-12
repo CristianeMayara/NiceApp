@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
@@ -13,8 +13,21 @@
     <!--/style-->
 
     <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
+    <style name="AppTheme" parent="android:style/Theme.NoTitleBar">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+    
+    <!-- Dialog Button theme. -->
+    <style name="dialog_button_style" parent="android:Widget">
+        <item name="android:background">@drawable/dialog_button</item>
+        <item name="android:textColor">@color/very_pleasant_color</item>
+        <item name="android:textColorHint">@color/background_color</item>
+    </style>
+    
+    <!-- Dialog Radio Button theme. -->
+    <style name="dialog_radio_button_style" parent="android:Widget">
+        <item name="android:scaleX">0.7</item>
+        <item name="android:scaleY">0.7</item>
     </style>
 
 </resources>

@@ -25,6 +25,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import br.ufc.mdcc.hellompos.R;
@@ -81,6 +82,8 @@ public class MainActivity extends Activity {
 	int currentPlaceId;  // placeId starts in 0
 	int currentVoteId;   // from user
 	//int currentRatingId; // from server - result
+	String resultStr;
+	MainFragment mainFragment;
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -88,7 +91,9 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction().add(R.id.container, new MainFragment()).commit();
+			mainFragment = new MainFragment();
+			getFragmentManager().beginTransaction().add(R.id.container, mainFragment).commit();
+			//getFragmentManager().beginTransaction().add(R.id.container, new MainFragment()).commit();
 		}
 		MposFramework.getInstance().start(this);
 		
@@ -101,6 +106,7 @@ public class MainActivity extends Activity {
 		currentPlaceId = -1;
 		currentVoteId = -1;
 		currentVote = null;
+		resultStr = null;
 		
 		// Initialize list of places
 		knownPlacesList = new ArrayList<Place>();
@@ -195,7 +201,9 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		currentVoteId = -1; 
+		currentVoteId = -1;
+		resultStr = null;
+		
 		// Remove the locationlistener updates when Activity is paused
 		//locationManager.removeUpdates(this);
 	}
@@ -208,58 +216,26 @@ public class MainActivity extends Activity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-			initButtons(rootView);
+			initComponents(rootView);
 			return rootView;
 		}
 
-		private void initButtons(View root) {
-			Button answer1Button = (Button) root.findViewById(R.id.option_one_btn);
-			answer1Button.setOnClickListener(new OnClickListener() {
+		private void initComponents(View root) {
+			Button getVoteButton = (Button) root.findViewById(R.id.get_vote_btn);
+			getVoteButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					currentVoteId = 1;
-					executeCommand("1");
-				}
-			});
-
-			Button answer2Button = (Button) root.findViewById(R.id.option_two_btn);
-			answer2Button.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					currentVoteId = 2;
-					executeCommand("2");
-				}
-			});
-
-			Button answer3Button = (Button) root.findViewById(R.id.option_three_btn);
-			answer3Button.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					currentVoteId = 3;
-					executeCommand("3");
-				}
-			});
-
-			Button answer4Button = (Button) root.findViewById(R.id.option_four_btn);
-			answer4Button.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					currentVoteId = 4;
-					executeCommand("4");
-				}
-			});
-			
-			Button answer5Button = (Button) root.findViewById(R.id.option_five_btn);
-			answer5Button.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					currentVoteId = 5;
-					executeCommand("5");
+					
+					AlertDialog optionsDialog = new OptionsAlertDialog(getActivity());
+					optionsDialog.show();
+					
+					Log.v("debug", "function: "+resultStr);
+					Log.v("debug", "currentVoteId: "+currentVoteId);
 				}
 			});
 		}
 
-		private void executeCommand(String function) {
+		public void executeCommand(String function) {
 			View root = getView();
 			
 			// Votes of the current place
@@ -356,6 +332,55 @@ public class MainActivity extends Activity {
 		}
 	}
 	
+	final class OptionsAlertDialog extends AlertDialog {
+
+        protected OptionsAlertDialog(Context context) {
+            super(context);
+            
+            // Get the layout inflater
+            LayoutInflater inflater = this.getLayoutInflater();
+            
+            // Inflate and set the layout for the dialog
+            View view = inflater.inflate(R.layout.dialog_options, null);
+            setView(view);
+            
+            // Find the radio group by returned id
+            final RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.radio_options_rg);
+            
+            // Add action buttons
+            Button dialogCancelBtn = (Button) view.findViewById(R.id.dialog_cancel_button);
+            Button dialogOkBtn = (Button) view.findViewById(R.id.dialog_ok_button);
+            
+            dialogOkBtn.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                	int selectedId = -1;
+                	
+                	// Get selected radio button from radioGroup
+        			selectedId = radioGroup.getCheckedRadioButtonId();
+        		    
+        		    switch(selectedId){
+        		    case R.id.radio_option_one: resultStr = "1"; break;
+        		    case R.id.radio_option_two: resultStr = "2"; break;
+        		    case R.id.radio_option_three: resultStr = "3"; break;
+        		    case R.id.radio_option_four: resultStr = "4"; break;
+        		    case R.id.radio_option_five: resultStr = "5"; break;
+        		    }
+        		    
+        		    currentVoteId = Integer.parseInt(resultStr);				
+        		    mainFragment.executeCommand(resultStr);
+        		    dismiss();
+                }
+            });
+            
+            dialogCancelBtn.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                	dismiss();
+                }
+            });
+        }
+
+    }	
+	
 	/**
      * Function to check GPS/wifi enabled
      * @return boolean
@@ -383,18 +408,21 @@ public class MainActivity extends Activity {
         }
     }
     
+    // TODO
     public void getLatitude () {
     	if (canGetLocation()){
     		
     	}
     }
     
+    // TODO
     public void getLongitude () {
     	if (canGetLocation()){
     		
     	}
     }
     
+    // TEMPORARY
 	public void initPlaceList () {
 		addPlace("Lagoa Campus do Pici",-3.742994,-38.574781);
 		addPlace("Restaurante Universitário UFC",-3.744741,-38.572775);
@@ -410,6 +438,7 @@ public class MainActivity extends Activity {
 		addPlace("Dragão do Mar",-3.721306,-38.520198);
 	}
 	
+	// TEMPORARY
 	public void addPlace (String name, double lat, double lon) {
 		knownPlacesList.add(new Place(name, lat, lon, idImage++));
 	}

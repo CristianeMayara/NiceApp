@@ -4,13 +4,13 @@
     <string name="app_name">Nice</string>
     
     <string name="action_settings">Settings</string>
-    <string name="instruction">Adicione uma nota de agradabilidade para esse lugar:</string>
+    <string name="instruction">Adicione uma nota de agradabilidade para este lugar:</string>
     <string name="image_place_description">Image of the current place</string>
     <string name="localization">Você está em</string>
     <string name="unavailable_place">Local não indentificado</string>
     <string name="suggestion_name">Sugira um novo nome a este lugar</string>
     <string name="number_votes_init">Total de</string>
-    <string name="number_votes_final">voto(s) para esse lugar</string>
+    <string name="number_votes_final">nota(s) para este lugar</string>
     <string name="location_str">Localização:</string>
     
     <string name="result_rating">Este lugar é considerado</string>
@@ -21,10 +21,12 @@
     <string name="rating_very_nice">MUITO AGRADÁVEL</string>
     <string name="rating_very_pleasant">AGRADABILÍSSIMO</string>
     
-    <string name="option_one_button">1</string>
-    <string name="option_two_button">2</string>
-    <string name="option_three_button">3</string>
-    <string name="option_four_button">4</string>
-    <string name="option_five_button">5</string>
+    <string name="get_vote_button">NOTA</string>
+    
+    <string name="dialog_title">Dê sua nota</string>
+    <string name="dialog_little_nice">pouco agradável</string>
+    <string name="dialog_very_pleasant">agradabilíssimo</string>
+    <string name="dialog_ok_button_str">OK</string>
+    <string name="dialog_cancel_button_str">CANCEL</string>
 
 </resources>

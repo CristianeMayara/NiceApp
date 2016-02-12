@@ -1,0 +1,120 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white" >
+    
+	<LinearLayout
+	    android:id="@+id/dialog_title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:background="@color/very_pleasant_color" >
+        
+        <TextView
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_vertical"
+	        android:text="@string/dialog_title"
+	        android:textColor="@color/white"
+	        android:layout_marginLeft="11dp"
+	        android:textSize="22sp" />
+        
+	</LinearLayout>
+    
+    <RelativeLayout
+        android:id="@+id/dialog_body_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialog_title_layout"
+        android:layout_marginTop="45dp"
+        android:layout_marginBottom="12dp" >
+        
+	    <TextView
+	        android:id="@+id/option_left"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_marginLeft="7dp"
+	        android:textColor="@color/gray"
+	        android:text="@string/dialog_little_nice" />
+	    
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_marginRight="7dp"
+	        android:textColor="@color/gray"
+	        android:text="@string/dialog_very_pleasant" />
+	    
+	    <RadioGroup
+	        android:id="@+id/radio_options_rg"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/option_left"
+	        android:gravity="center"
+	        android:orientation="horizontal"
+	        android:layout_marginLeft="30dp"
+	        android:layout_marginRight="30dp" >
+	
+	        <RadioButton
+	            android:id="@+id/radio_option_one"
+	            android:layout_width="wrap_content"
+	            android:layout_height="match_parent"
+	            android:checked="true"
+	            android:layout_marginRight="10dp"
+	            style="@style/dialog_radio_button_style" />
+	        <RadioButton
+	            android:id="@+id/radio_option_two"
+	            android:layout_width="wrap_content"
+	            android:layout_height="match_parent"
+	            android:layout_marginRight="10dp"
+	            style="@style/dialog_radio_button_style" />
+	        <RadioButton
+	            android:id="@+id/radio_option_three"
+	            android:layout_width="wrap_content"
+	            android:layout_height="match_parent"
+	            android:layout_marginRight="10dp"
+	            style="@style/dialog_radio_button_style" />
+	        <RadioButton
+	            android:id="@+id/radio_option_four"
+	            android:layout_width="wrap_content"
+	            android:layout_height="match_parent"
+	            android:layout_marginRight="10dp"
+	            style="@style/dialog_radio_button_style" />
+	        <RadioButton
+	            android:id="@+id/radio_option_five"
+	            android:layout_width="wrap_content"
+	            android:layout_height="match_parent"
+	            style="@style/dialog_radio_button_style" />
+	
+	    </RadioGroup>
+	    
+	</RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/dialog_buttons_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialog_body_layout"
+        android:orientation="horizontal"
+        android:gravity="right" >
+	    
+        <Button
+            android:id="@+id/dialog_cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_cancel_button_str"
+            style="@style/dialog_button_style" />
+        
+        <Button
+            android:id="@+id/dialog_ok_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_ok_button_str"
+            style="@style/dialog_button_style" />
+	    
+	</LinearLayout>
+    
+</RelativeLayout>

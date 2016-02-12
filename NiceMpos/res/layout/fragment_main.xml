@@ -66,34 +66,11 @@
         android:gravity="center" >
 
         <Button
-            android:id="@+id/option_one_btn"
-            android:layout_width="40dp"
+            android:id="@+id/get_vote_btn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/option_one_button" />
-
-        <Button
-            android:id="@+id/option_two_btn"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:text="@string/option_two_button" />
-
-        <Button
-            android:id="@+id/option_three_btn"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:text="@string/option_three_button" />
-
-        <Button
-            android:id="@+id/option_four_btn"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:text="@string/option_four_button" />
-        
-        <Button
-            android:id="@+id/option_five_btn"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:text="@string/option_five_button" />
+            android:text="@string/get_vote_button"
+            android:textSize="18sp" />
 
     </LinearLayout>
         
