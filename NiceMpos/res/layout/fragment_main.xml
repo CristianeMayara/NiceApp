@@ -45,19 +45,45 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="-20dp"
         android:src="@drawable/place_nophoto" />
-		
+
+    <LinearLayout
+        android:id="@+id/buttons_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/place_image_iv"
+        android:layout_marginTop="-80dp"
+        android:layout_gravity="center"
+        android:gravity="center" >
+
+        <ImageView
+            android:id="@+id/remove_place_btn"
+		    android:layout_height="30dp"
+		    android:layout_width="30dp"
+		    android:layout_marginRight="20dp" />
+        <ImageView
+            android:id="@+id/edit_place_btn"
+		    android:layout_height="30dp"
+		    android:layout_width="30dp"
+		    android:layout_marginRight="20dp" />
+        <ImageView
+            android:id="@+id/save_place_btn"
+		    android:layout_height="30dp"
+		    android:layout_width="30dp" />
+
+    </LinearLayout>
+    
 	<TextView
         android:id="@+id/instruction_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/place_image_iv"
-        android:layout_marginTop="-55dp"
+        android:layout_below="@id/buttons_layout"
+        android:layout_marginTop="53dp"
         android:layout_gravity="center"
         android:textColorHighlight="@color/black"
         android:hint="@string/instruction" />
 
     <LinearLayout
-        android:id="@+id/buttons_layout"
+        android:id="@+id/vote_button_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/instruction_tv"
@@ -73,8 +99,8 @@
             android:textSize="18sp" />
 
     </LinearLayout>
-        
-    <TextView
+    
+    <!--TextView
         android:id="@+id/location_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -82,6 +108,6 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:textColor="@color/black"
-        android:hint="@string/suggestion_name" />
+        android:hint="@string/suggestion_name" /-->
 
 </RelativeLayout>

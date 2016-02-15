@@ -20,8 +20,10 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -138,13 +140,14 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onLocationChanged(Location location) {
-				TextView tv = (TextView)findViewById(R.id.location_tv);
+				// Show location on screen
+				/*TextView tv = (TextView)findViewById(R.id.location_tv);
 				if (location != null)
 					tv.setText(getResources().getString(R.string.location_str) +" "+ 
 							(double) location.getLatitude() +" "+ 
 							(double) location.getLongitude());
 				else
-					tv.setText("location is null");
+					tv.setText("location is null");*/
 				
 				// Update variables of localization
 				if (location != null){
@@ -154,8 +157,13 @@ public class MainActivity extends Activity {
 					// Check if the user is in a known location
 					int placeId = isKnownPlace (location);
 					showPlaceInformations(placeId);
+					
+					// Update buttons
+					mainFragment.buttonsLogicUpdate();
+					
 					if (isKnownPlace) isKnownPlace = false;
 				}
+
 			}
 		});
 	    
@@ -212,11 +220,16 @@ public class MainActivity extends Activity {
 	 * A placeholder fragment (MainFragment) containing a simple view.
 	 */
 	public final class MainFragment extends Fragment {
+		ImageView saveButton;
+		ImageView editButton;
+		ImageView removeButton;
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 			initComponents(rootView);
+			initButtons(rootView);
+			buttonsLogicUpdate();
 			return rootView;
 		}
 
@@ -225,14 +238,52 @@ public class MainActivity extends Activity {
 			getVoteButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					
 					AlertDialog optionsDialog = new OptionsAlertDialog(getActivity());
 					optionsDialog.show();
-					
-					Log.v("debug", "function: "+resultStr);
-					Log.v("debug", "currentVoteId: "+currentVoteId);
 				}
 			});
+		}
+		
+		public void initButtons (View root){
+			saveButton = (ImageView) root.findViewById(R.id.save_place_btn);
+			saveButton.setOnTouchListener(new OnTouchListener() {
+	            @Override
+	            public boolean onTouch(View arg0, MotionEvent arg1) {
+	                saveButton.setSelected(arg1.getAction()==MotionEvent.ACTION_DOWN);
+	                Log.v("debug", "Save button pressed");
+	                return true;
+	            }
+	        });
+			editButton = (ImageView) root.findViewById(R.id.edit_place_btn);
+			editButton.setOnTouchListener(new OnTouchListener() {
+	            @Override
+	            public boolean onTouch(View arg0, MotionEvent arg1) {
+	                editButton.setSelected(arg1.getAction()==MotionEvent.ACTION_DOWN);
+	                Log.v("debug", "Edit button pressed");
+	                return true;
+	            }
+	        });
+			removeButton = (ImageView) root.findViewById(R.id.remove_place_btn);
+			removeButton.setOnTouchListener(new OnTouchListener() {
+	            @Override
+	            public boolean onTouch(View arg0, MotionEvent arg1) {
+	                removeButton.setSelected(arg1.getAction()==MotionEvent.ACTION_DOWN);
+	                Log.v("debug", "Remove button pressed");
+	                return true;
+	            }
+	        });
+		}
+		
+		public void buttonsLogicUpdate(){
+			if (isKnownPlace){
+				saveButton.setBackgroundResource(R.drawable.icon_save_desable);
+				editButton.setBackgroundResource(R.drawable.icon_edit);
+				removeButton.setBackgroundResource(R.drawable.icon_remove);
+			} else {
+				saveButton.setBackgroundResource(R.drawable.icon_save);
+				editButton.setBackgroundResource(R.drawable.icon_edit_desable);
+				removeButton.setBackgroundResource(R.drawable.icon_remove_desable);
+			}
 		}
 
 		public void executeCommand(String function) {
